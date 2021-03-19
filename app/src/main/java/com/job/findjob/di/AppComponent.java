@@ -19,6 +19,4 @@ public interface AppComponent {
         Builder application(App app);
         AppComponent build();
     }
-
-
 }
