@@ -3,7 +3,6 @@ package com.job.findjob.data.entity;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-
     public class GithubJob {
         @SerializedName("id")
         @Expose

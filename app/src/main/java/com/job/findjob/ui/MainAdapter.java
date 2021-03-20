@@ -37,7 +37,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.RecyclerViewAd
     @Override
     public RecyclerViewAdapter onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        ItemJobBinding binding = DataBindingUtil.inflate(inflater, R.layout.item_job, parent, false);
+        ItemJobBinding binding = DataBindingUtil.inflate(inflater, R.layout.item_job,
+                parent, false);
         return new RecyclerViewAdapter(binding);
     }
 

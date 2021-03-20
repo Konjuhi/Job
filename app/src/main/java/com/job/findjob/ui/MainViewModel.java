@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.job.findjob.Utils;
 import com.job.findjob.base.BaseViewModel;
 import com.job.findjob.data.api.ConnectionServer;
 import com.job.findjob.data.entity.GithubJob;
@@ -25,22 +26,27 @@ public class MainViewModel  extends BaseViewModel<MainViewModel.Navigator> {
         super(context, connectionServer);
     }
 
-    public void getJobFromServer(){
+    public String formatDate(String date){
+        return Utils.dateToTimeFormat(date);
+    }
+
+    public void getJobFromServer() {
         getNavigator().showProgress();
         getConnectionServer().getJobList().enqueue(new Callback<List<GithubJob>>() {
             @Override
             public void onResponse(Call<List<GithubJob>> call, Response<List<GithubJob>> response) {
-                if(response.isSuccessful() && response.body().size()>0){
+                if (response.isSuccessful() && response.body().size() > 0) {
                     jobList.postValue(response.body());
+                    getNavigator().onGetResult(true, "Success");
                 }
                 getNavigator().hideProgress();
-
             }
 
             @Override
             public void onFailure(Call<List<GithubJob>> call, Throwable t) {
                 t.getLocalizedMessage();
                 getNavigator().hideProgress();
+                getNavigator().onGetResult(false, Utils.errorMessageHandler(call, t));
             }
         });
     }
@@ -62,6 +68,7 @@ public class MainViewModel  extends BaseViewModel<MainViewModel.Navigator> {
     interface Navigator {
         void showProgress();
         void hideProgress();
+        void onGetResult(boolean status, String message);
     }
 }
 
