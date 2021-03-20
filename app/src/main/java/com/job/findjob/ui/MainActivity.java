@@ -6,9 +6,11 @@ import androidx.lifecycle.ViewModelProvider;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.job.findjob.R;
 import com.job.findjob.base.BaseActivity;
 import com.job.findjob.data.api.ConnectionServer;
+import com.job.findjob.data.storage.GithubJobRepository;
 import com.job.findjob.databinding.ActivityMainBinding;
 import com.job.findjob.ui.MainViewModel;
 
@@ -17,7 +19,12 @@ import javax.inject.Inject;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements MainViewModel.Navigator {
 
-    @Inject ConnectionServer server;
+    @Inject
+    ConnectionServer server;
+
+    @Inject
+    GithubJobRepository repository;
+
     private ActivityMainBinding binding;
     private MainViewModel viewModel;
 
@@ -40,13 +47,26 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = getViewDataBinding();
-        viewModel = new ViewModelProvider(this, new MainViewModel.ModelFactory(this, server)).get(MainViewModel.class);
+        viewModel = new ViewModelProvider(this, new MainViewModel.ModelFactory(this, server, repository)).get(MainViewModel.class);
         viewModel.setNavigator(this);
         viewModel.getJobFromServer();
-        viewModel.jobList.observe(this, githubJobs -> {
+       /* viewModel.jobList.observe(this, githubJobs -> {
             binding.recyclerView.setAdapter(new MainAdapter(githubJobs));
+        });*/
+        viewModel.getLiveData().observe(this, githubJobs -> {
+            binding.recyclerView.setAdapter(new MainAdapter(githubJobs,viewModel));
         });
-        binding.swipeRefresh.setOnRefreshListener(()->viewModel.getJobFromServer());
+        viewModel.getLiveDataMarked().observe(this, githubJobs -> {
+            if (githubJobs.size() > 0) {
+                binding.markedTitle.setVisibility(View.VISIBLE);
+                binding.recyclerViewMarked.setVisibility(View.VISIBLE);
+                binding.recyclerViewMarked.setAdapter(new MainMarkedAdapter(githubJobs, viewModel));
+            } else {
+                binding.markedTitle.setVisibility(View.GONE);
+                binding.recyclerViewMarked.setVisibility(View.GONE);
+            }
+        });
+        binding.swipeRefresh.setOnRefreshListener(() -> viewModel.getJobFromServer());
     }
 
     @Override
@@ -76,4 +96,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
             binding.emptyView.setVisibility(View.GONE);
         }
     }
-}
+
+        @Override
+        public void onMark ( int mark, String title){
+            Snackbar.make(binding.getRoot(), mark == 0 ? "\uD83D\uDE13 Unmark " + title : "\uD83D\uDE0D Marked " + title, Snackbar.LENGTH_SHORT).show();
+        }
+    }
+

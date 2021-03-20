@@ -7,6 +7,9 @@
         <variable
             name="item"
             type="com.job.findjob.data.entity.GithubJob" />
+        <variable
+            name="viewModel"
+            type="com.job.findjob.ui.MainViewModel" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -31,14 +34,14 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
                 android:layout_marginBottom="9dp"
-                android:padding="4dp" >
+                android:padding="4dp">
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/photoPreviewLayout"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginStart="6dp"
+                    android:layout_marginTop="6dp"
                     android:src="@drawable/ic_photo"
                     app:strokeWidth="0.5dp"
                     app:strokeColor="#f1f1f1"
@@ -72,7 +75,8 @@
                     android:layout_toEndOf="@id/photoPreviewLayout"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp">
                     <TextView
                         android:id="@+id/title"
                         android:ellipsize="end"
@@ -80,6 +84,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
+                        android:layout_marginEnd="36dp"
                         android:text="@{item.title}"
                         android:textColor="@color/gray_500"
                         android:textSize="18sp"
@@ -146,7 +151,7 @@
                             android:paddingTop="2dp"
                             android:paddingBottom="2dp"
                             android:background="@drawable/bg_job_type"
-                            android:textColor="@color/blue_500"
+                            android:textColor="@color/green_300"
                             android:text="@{item.type}"
                             android:textSize="10sp"
                             android:fontFamily="@font/book"/>
@@ -161,11 +166,25 @@
                             android:paddingBottom="2dp"
                             android:layout_alignParentEnd="true"
                             android:textColor="@color/gray_300"
-                            android:text="@{item.createdAt}"
+                            android:text="@{viewModel.formatDate(item.createdAt)}"
                             android:textSize="11sp"
                             android:fontFamily="@font/book"/>
                     </RelativeLayout>
                 </LinearLayout>
+
+                <ImageView
+                    android:onClick="@{()->viewModel.markJob(item)}"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:id="@+id/mark"
+                    android:layout_width="30dp"
+                    android:layout_height="40dp"
+                    android:src="@{item.is_mark == 1 ? @drawable/ic_marked : @drawable/ic_mark}"
+                    android:layout_alignParentEnd="true"
+                    android:padding="3dp"
+                    app:tint="@color/gray_200"/>
+
             </RelativeLayout>
         </LinearLayout>
 

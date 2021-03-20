@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 
 import androidx.appcompat.app.AppCompatDelegate;
 
+import org.jetbrains.annotations.NotNull;
 import org.ocpsoft.prettytime.PrettyTime;
 
 import java.io.IOException;
@@ -128,6 +129,7 @@ public final class Utils {
         return isTime;
     }
 
+    @NotNull
     public static String dateFormatter(String Date) {
         if (Date != null) {
             SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
@@ -143,6 +145,7 @@ public final class Utils {
         return "-";
     }
 
+    @NotNull
     public static String errorMessageHandler(Call call, Throwable t) {
         if (t instanceof SocketTimeoutException)
         {

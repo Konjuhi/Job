@@ -4,6 +4,7 @@ import com.job.findjob.App;
 import com.job.findjob.Constants;
 import com.job.findjob.data.api.ApiInterface;
 import com.job.findjob.data.api.ConnectionServer;
+import com.job.findjob.data.storage.GithubJobRepository;
 
 import java.util.concurrent.TimeUnit;
 
@@ -62,5 +63,10 @@ public class AppModule {
     @Provides @Singleton
     ApiInterface provideApiInterface(Retrofit retrofit) {
         return retrofit.create(ApiInterface.class);
+    }
+
+    @Provides @Singleton
+    GithubJobRepository provideRepository(App app){
+        return  GithubJobRepository.getInstance(app);
     }
 }

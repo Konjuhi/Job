@@ -5,5 +5,6 @@ public final class Constants {
     public static final String CONTENT_TYPE = "Content-Type";
     public static final String APP_JSON = "application/json";
     public static final String DARK_MODE = "dark_mode";
+    public static final String MASTER_DB="githubjob.db";
 }
 

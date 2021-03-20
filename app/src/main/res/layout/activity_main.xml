@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
             name="viewModel"
@@ -146,110 +145,165 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <RelativeLayout
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefresh"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@drawable/bg_rounded_top"
+            android:fillViewport="true"
+            android:fitsSystemWindows="true"
             app:layout_anchor="@id/appbar"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-            <com.facebook.shimmer.ShimmerFrameLayout
-                android:id="@+id/shimmer"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_marginTop="16dp"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                app:shimmer_duration="800"
-                app:shimmer_auto_start="true">
-                <LinearLayout
+                android:layout_height="wrap_content">
+
+                <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <include layout="@layout/item_job_placeholder" />
-                    <include layout="@layout/item_job_placeholder" />
-                    <include layout="@layout/item_job_placeholder" />
-                    <include layout="@layout/item_job_placeholder" />
-                    <include layout="@layout/item_job_placeholder" />
-                    <include layout="@layout/item_job_placeholder" />
-                    <include layout="@layout/item_job_placeholder" />
-                    <include layout="@layout/item_job_placeholder" />
-                    <include layout="@layout/item_job_placeholder" />
-                </LinearLayout>
-            </com.facebook.shimmer.ShimmerFrameLayout>
+                    android:layout_marginTop="16dp"
+                    android:fillViewport="true">
 
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/swipeRefresh"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="16dp">
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView"
+                    <RelativeLayout
+                        android:id="@+id/contentLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/markedTitle"
+                            android:text="Marked Job"
+                            android:textSize="16dp"
+                            android:textColor="@color/gray_600"
+                            android:layout_marginStart="21dp"
+                            android:layout_marginEnd="21dp"
+                            android:layout_marginTop="25dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/medium"/>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerViewMarked"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_below="@id/markedTitle"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            android:nestedScrollingEnabled="true"
+                            android:orientation="horizontal"/>
+
+                        <TextView
+                            android:id="@+id/recommendedTitle"
+                            android:text="Recommended Job"
+                            android:textSize="16dp"
+                            android:textColor="@color/gray_600"
+                            android:layout_marginStart="21dp"
+                            android:layout_marginEnd="21dp"
+                            android:layout_marginTop="25dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/recyclerViewMarked"
+                            android:fontFamily="@font/medium"/>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_below="@id/recommendedTitle"
+                            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+                    </RelativeLayout>
+
+                </androidx.core.widget.NestedScrollView>
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmer"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
+                    android:orientation="vertical"
+                    android:layout_marginTop="16dp"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:shimmer_duration="800"
+                    app:shimmer_auto_start="true">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <include layout="@layout/item_job_placeholder" />
+                        <include layout="@layout/item_job_placeholder" />
+                        <include layout="@layout/item_job_placeholder" />
+                        <include layout="@layout/item_job_placeholder" />
+                        <include layout="@layout/item_job_placeholder" />
+                        <include layout="@layout/item_job_placeholder" />
+                        <include layout="@layout/item_job_placeholder" />
+                        <include layout="@layout/item_job_placeholder" />
+                        <include layout="@layout/item_job_placeholder" />
+                    </LinearLayout>
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+                <LinearLayout
+                    android:id="@+id/emptyView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:fillViewport="true"
+                    android:clickable="false"
+                    android:focusable="false"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                    app:layout_constraintTop_toTopOf="parent">
+                    <ImageView
+                        android:layout_width="250dp"
+                        android:layout_height="250dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="100dp"
+                        android:src="@drawable/ic_undraw_empty" />
+                    <TextView
+                        android:id="@+id/textEmpty"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingStart="16dp"
+                        android:paddingTop="16dp"
+                        android:paddingEnd="16dp"
+                        android:text="No Data Found"
+                        android:fontFamily="@font/medium"/>
+                    <TextView
+                        android:id="@+id/textEmptyErr"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingStart="16dp"
+                        android:paddingBottom="16dp"
+                        android:paddingEnd="16dp"
+                        android:fontFamily="@font/book"/>
+                </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/emptyView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:fillViewport="true"
-                android:clickable="false"
-                android:focusable="false"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
                 <ImageView
-                    android:layout_width="250dp"
-                    android:layout_height="250dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="100dp"
-                    android:src="@drawable/ic_undraw_empty" />
-                <TextView
-                    android:id="@+id/textEmpty"
+                    android:id="@+id/shadow"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:paddingStart="16dp"
-                    android:paddingTop="16dp"
-                    android:paddingEnd="16dp"
-                    android:text="No Data Found"
-                    android:fontFamily="@font/medium"/>
-                <TextView
-                    android:id="@+id/textEmptyErr"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:paddingStart="16dp"
-                    android:paddingBottom="16dp"
-                    android:paddingEnd="16dp"
-                    android:fontFamily="@font/book"/>
-            </LinearLayout>
+                    android:layout_height="35dp"
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/bg_shadow_up_to_down"
+                    android:visibility="visible" />
 
-            <ImageView
-                android:id="@+id/shadow"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_marginTop="16dp"
-                android:src="@drawable/bg_shadow_up_to_down"
-                android:visibility="visible" />
+                <ImageView
+                    android:background="@drawable/bg_strip_round"
+                    android:layout_width="40dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_centerHorizontal="true"/>
 
-            <ImageView
-                android:background="@drawable/bg_strip_round"
-                android:layout_width="40dp"
-                android:layout_height="5dp"
-                android:layout_marginTop="8dp"
-                android:layout_centerHorizontal="true"/>
+            </RelativeLayout>
 
-        </RelativeLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

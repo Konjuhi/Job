@@ -1,9 +1,17 @@
 package com.job.findjob.data.entity;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-    public class GithubJob {
+@Entity
+public class GithubJob {
+
+        @PrimaryKey
+        @NonNull
         @SerializedName("id")
         @Expose
         public String id;
@@ -37,5 +45,6 @@ import com.google.gson.annotations.SerializedName;
         @SerializedName("company_logo")
         @Expose
         public String companyLogo;
+        public int is_mark;
     }
 

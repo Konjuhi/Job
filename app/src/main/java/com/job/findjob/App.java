@@ -10,6 +10,7 @@ import androidx.multidex.MultiDexApplication;
 import com.job.findjob.di.AppComponent;
 import com.job.findjob.di.DaggerAppComponent;
 
+
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjector;

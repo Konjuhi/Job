@@ -21,16 +21,17 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.job.findjob.R;
 import com.job.findjob.data.entity.GithubJob;
-import com.job.findjob.databinding.ItemJobBinding;
+import com.job.findjob.databinding.ItemJobMarkedBinding;
 
 import java.util.List;
 
-public class MainAdapter extends RecyclerView.Adapter<MainAdapter.RecyclerViewAdapter> {
+
+public class MainMarkedAdapter extends RecyclerView.Adapter<MainMarkedAdapter.RecyclerViewAdapter> {
 
     private List<GithubJob> data;
     private MainViewModel viewModel;
 
-    protected MainAdapter(List<GithubJob> data, MainViewModel viewModel) {
+    protected MainMarkedAdapter(List<GithubJob> data, MainViewModel viewModel) {
         this.data = data;
         this.viewModel = viewModel;
     }
@@ -39,7 +40,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.RecyclerViewAd
     @Override
     public RecyclerViewAdapter onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        ItemJobBinding binding = DataBindingUtil.inflate(inflater, R.layout.item_job, parent, false);
+        ItemJobMarkedBinding binding = DataBindingUtil.inflate(inflater, R.layout.item_job_marked, parent, false);
         return new RecyclerViewAdapter(binding);
     }
 
@@ -65,8 +66,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.RecyclerViewAd
     }
 
     public static class RecyclerViewAdapter extends RecyclerView.ViewHolder {
-        ItemJobBinding binding;
-        public RecyclerViewAdapter(ItemJobBinding binding) {
+        ItemJobMarkedBinding binding;
+        public RecyclerViewAdapter(ItemJobMarkedBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
