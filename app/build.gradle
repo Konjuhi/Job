@@ -85,6 +85,7 @@ dependencies {
     implementation 'com.xeoh.android:text-highlighter:1.0.3'
 
     implementation 'com.airbnb.android:lottie:3.4.0'
-    implementation 'com.github.haerulmuttaqin:BottomFluxDialog:0.1.0'
+
+    implementation 'com.github.haerulmuttaqin:BottomFluxDialog:0.1.1'
 
 }

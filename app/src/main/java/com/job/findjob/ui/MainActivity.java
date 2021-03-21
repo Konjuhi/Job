@@ -6,8 +6,10 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.haerul.bottomfluxdialog.BottomFluxDialog;
 import com.job.findjob.R;
 import com.job.findjob.base.BaseActivity;
 import com.job.findjob.data.api.ConnectionServer;
@@ -16,6 +18,7 @@ import com.job.findjob.data.storage.GithubJobRepository;
 import com.job.findjob.databinding.ActivityMainBinding;
 import com.job.findjob.ui.MainViewModel;
 import com.job.findjob.ui.detail.DetailActivity;
+import com.job.findjob.ui.list.ListActivity;
 
 
 import javax.inject.Inject;
@@ -53,9 +56,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         viewModel = new ViewModelProvider(this, new MainViewModel.ModelFactory(this, server, repository)).get(MainViewModel.class);
         viewModel.setNavigator(this);
         viewModel.getJobFromServer();
+
        /* viewModel.jobList.observe(this, githubJobs -> {
             binding.recyclerView.setAdapter(new MainAdapter(githubJobs));
         });*/
+
         viewModel.getLiveData().observe(this, githubJobs -> {
             binding.recyclerView.setAdapter(new MainAdapter(githubJobs,viewModel));
         });
@@ -70,6 +75,30 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
             }
         });
         binding.swipeRefresh.setOnRefreshListener(() -> viewModel.getJobFromServer());
+        binding.search.setOnClickListener(view->{
+            showDialogSearch();
+        });
+    }
+
+    private void showDialogSearch() {
+
+        BottomFluxDialog.inputDialog(MainActivity.this)
+                .setTextMessage("What are you Looking for?")
+                .setRightButtonText("SUBMIT")
+                .setInputListener(new BottomFluxDialog.OnInputListener() {
+                    @Override
+                    public void onSubmitInput(String text) {
+                        //Toast.makeText(MainActivity.this,"Input : " + text,Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(MainActivity.this, ListActivity.class);
+                        intent.putExtra("search",text);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onCancelInput() {
+
+                    }
+                }).show();
     }
 
     @Override
@@ -101,7 +130,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     }
 
         @Override
-        public void onMark ( int mark, String title){
+        public void onMark(int mark, String title){
             Snackbar.make(binding.getRoot(), mark == 0 ? "\uD83D\uDE13 Unmark " + title : "\uD83D\uDE0D Marked " + title, Snackbar.LENGTH_SHORT).show();
         }
 

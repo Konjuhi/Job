@@ -37,6 +37,10 @@ public class MainViewModel extends BaseViewModel<MainViewModel.Navigator> {
         return getRepository().getLiveDataMarked();
     }
 
+    public LiveData<List<GithubJob>> searchLiveData(String keyword){
+        return getRepository().searchLiveData(keyword);
+    }
+
     public String formatDate(String date){
         return Utils.dateToTimeFormat(date);
     }
@@ -49,6 +53,29 @@ public class MainViewModel extends BaseViewModel<MainViewModel.Navigator> {
                 if (response.isSuccessful() && response.body().size() > 0) {
                     for (GithubJob item : response.body()) {
                         item.createdAt = Utils.dateFormatter(item.createdAt); // format date
+                        getRepository().insert(item);
+                    }
+                    getNavigator().onGetResult(true, "Success");
+                }
+                getNavigator().hideProgress();
+            }
+            @Override
+            public void onFailure(Call<List<GithubJob>> call, Throwable t) {
+                t.getLocalizedMessage();
+                getNavigator().hideProgress();
+                getNavigator().onGetResult(false, Utils.errorMessageHandler(call, t));
+            }
+        });
+
+    }
+
+    public void searchJobFromServer(String keyword) {
+        getNavigator().showProgress();
+        getConnectionServer().searchJobList(keyword).enqueue(new Callback<List<GithubJob>>() {
+            @Override
+            public void onResponse(Call<List<GithubJob>> call, Response<List<GithubJob>> response) {
+                if (response.isSuccessful() && response.body().size() > 0) {
+                    for (GithubJob item : response.body()) {
                         getRepository().insert(item);
                     }
                     getNavigator().onGetResult(true, "Success");
@@ -89,7 +116,7 @@ public class MainViewModel extends BaseViewModel<MainViewModel.Navigator> {
         }
     }
 
-    interface Navigator {
+     public interface Navigator {
         void showProgress();
         void hideProgress();
         void onGetResult(boolean status, String message);

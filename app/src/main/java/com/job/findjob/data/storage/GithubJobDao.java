@@ -24,4 +24,8 @@ public interface GithubJobDao {
     @Query("SELECT * FROM githubjob where id = :id")
     GithubJob getDataById(String id);
 
+    @Query("SELECT * FROM githubjob WHERE LOWER(title) LIKE :keyword OR LOWER(description) LIKE :keyword ORDER BY createdAt DESC")
+    LiveData<List<GithubJob>> searchLiveData(String keyword);
+
+
 }

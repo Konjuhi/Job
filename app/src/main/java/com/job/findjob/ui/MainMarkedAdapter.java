@@ -31,7 +31,7 @@ public class MainMarkedAdapter extends RecyclerView.Adapter<MainMarkedAdapter.Re
     private List<GithubJob> data;
     private MainViewModel viewModel;
 
-    protected MainMarkedAdapter(List<GithubJob> data, MainViewModel viewModel) {
+    public MainMarkedAdapter(List<GithubJob> data, MainViewModel viewModel) {
         this.data = data;
         this.viewModel = viewModel;
     }

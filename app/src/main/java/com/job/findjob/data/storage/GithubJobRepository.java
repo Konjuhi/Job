@@ -43,5 +43,10 @@ public class GithubJobRepository {
     public LiveData<List<GithubJob>> getLiveDataMarked() {
         return database.githubJobDao().getLiveDataMarked();
     }
+
+    public LiveData<List<GithubJob>> searchLiveData(String keyword){
+        keyword = "%" + keyword + "%";
+        return database.githubJobDao().searchLiveData(keyword);
+    }
 }
 

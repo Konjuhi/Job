@@ -22,4 +22,8 @@ public class ConnectionServer {
         return apiInterface.getJobList();
     }
 
+    public Call<List<GithubJob>> searchJobList(String keyword){
+        return apiInterface.searchJobList(keyword);
+    }
+
 }
