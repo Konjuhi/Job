@@ -3,6 +3,7 @@ package com.job.findjob.ui;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -10,9 +11,11 @@ import com.google.android.material.snackbar.Snackbar;
 import com.job.findjob.R;
 import com.job.findjob.base.BaseActivity;
 import com.job.findjob.data.api.ConnectionServer;
+import com.job.findjob.data.entity.GithubJob;
 import com.job.findjob.data.storage.GithubJobRepository;
 import com.job.findjob.databinding.ActivityMainBinding;
 import com.job.findjob.ui.MainViewModel;
+import com.job.findjob.ui.detail.DetailActivity;
 
 
 import javax.inject.Inject;
@@ -101,5 +104,13 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         public void onMark ( int mark, String title){
             Snackbar.make(binding.getRoot(), mark == 0 ? "\uD83D\uDE13 Unmark " + title : "\uD83D\uDE0D Marked " + title, Snackbar.LENGTH_SHORT).show();
         }
+
+    @Override
+    public void onItemClick(GithubJob githubJob) {
+        Intent intent = new Intent(this, DetailActivity.class);
+        intent.putExtra("item",githubJob);
+        startActivity(intent);
+
     }
+}
 

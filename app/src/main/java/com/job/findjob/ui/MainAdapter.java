@@ -51,6 +51,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.RecyclerViewAd
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onBindViewHolder(RecyclerViewAdapter holder, int position) {
         GithubJob items = data.get(position);
