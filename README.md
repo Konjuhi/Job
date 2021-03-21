@@ -7,8 +7,8 @@ and maintainable apps. Start with classes for managing your UI component lifecyc
 
 ### Screenshots
 
-![1](https://user-images.githubusercontent.com/44701013/111915518-05530400-8a77-11eb-95ab-ccafcf717f9f.png)
-![2](https://user-images.githubusercontent.com/44701013/111915519-06843100-8a77-11eb-80ca-abc5d2089e17.png)
-![3](https://user-images.githubusercontent.com/44701013/111915520-06843100-8a77-11eb-8f02-acc37cafaa12.png)
-![4](https://user-images.githubusercontent.com/44701013/111915522-071cc780-8a77-11eb-802b-d26f1846a830.png)
-![5](https://user-images.githubusercontent.com/44701013/111915523-071cc780-8a77-11eb-8697-1b62a5a03b30.png)
+![1](https://user-images.githubusercontent.com/44701013/111915581-59f67f00-8a77-11eb-8119-9bc961525153.png)
+![2](https://user-images.githubusercontent.com/44701013/111915583-5a8f1580-8a77-11eb-81ad-b61483f8d316.png)
+![3](https://user-images.githubusercontent.com/44701013/111915584-5a8f1580-8a77-11eb-854b-41e74d77cd11.png)
+![5](https://user-images.githubusercontent.com/44701013/111915585-5b27ac00-8a77-11eb-8cef-e64a3e6fd4a3.png)
+![4](https://user-images.githubusercontent.com/44701013/111915586-5b27ac00-8a77-11eb-8136-a57fa3943587.png)
